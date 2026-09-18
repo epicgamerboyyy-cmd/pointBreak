@@ -58,11 +58,6 @@ public class Login {
     /**
      * The password must be eight characters or longer and must have a capital
      * letter, a number and a special character.
-     *
-     * Regex "lookahead" technique adapted from:
-     * Oracle, 2023. Class Pattern. [Online] Available at:
-     * https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/regex/Pattern.html
-     * [Accessed 17 September 2026].
      */
     public boolean checkPasswordComplexity() {
         if (password == null) {
