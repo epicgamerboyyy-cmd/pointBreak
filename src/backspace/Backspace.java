@@ -54,6 +54,7 @@ public class Backspace {
 
         // Messages are only available once the login succeeded.
         if (isLoggedIn) {
+            Message.setCurrentUser(user.getCellPhoneNumber());
             runQuickChat(scanner);
         }
 
@@ -76,6 +77,7 @@ public class Backspace {
             System.out.println("1) Send Messages");
             System.out.println("2) Show recently sent messages");
             System.out.println("3) Quit");
+            System.out.println("4) Stored Messages");
             System.out.print("Choose an option: ");
 
             String choice = scanner.nextLine().trim();
@@ -99,8 +101,12 @@ public class Backspace {
                     running = false;
                     break;
 
+                case "4":
+                    storedMessagesMenu(scanner);
+                    break;
+
                 default:
-                    System.out.println("Please choose 1, 2 or 3.");
+                    System.out.println("Please choose 1, 2, 3 or 4.");
             }
         }
 
@@ -151,6 +157,74 @@ public class Backspace {
         }
 
         return true;
+    }
+
+    /**
+     * The Stored Messages menu from Part 3.
+     */
+    private static void storedMessagesMenu(Scanner scanner) {
+        // Pull the saved messages back out of the JSON file first, so the
+        // array holds everything from previous runs too.
+        System.out.println("\n" + Message.readStoredMessages());
+
+        boolean open = true;
+        while (open) {
+            System.out.println("\n--- STORED MESSAGES ---");
+            System.out.println("a) Sender and recipient of all stored messages");
+            System.out.println("b) Longest message");
+            System.out.println("c) Search by message ID");
+            System.out.println("d) Search by recipient");
+            System.out.println("e) Delete a message using its hash");
+            System.out.println("f) Full report");
+            System.out.println("g) Back to the main menu");
+            System.out.print("Choose an option: ");
+
+            String choice = scanner.nextLine().trim().toLowerCase();
+
+            switch (choice) {
+                case "a":
+                    System.out.println("\n" + Message.displaySenderAndRecipient());
+                    break;
+
+                case "b":
+                    System.out.println("\nLongest message: " + Message.displayLongestMessage());
+                    break;
+
+                case "c":
+                    System.out.print("Enter the message ID: ");
+                    String id = scanner.nextLine().trim();
+                    Message found = Message.findByMessageID(id);
+
+                    if (found == null) {
+                        System.out.println("No message found with that ID.");
+                    } else {
+                        System.out.println("Recipient: " + found.getRecipient());
+                        System.out.println("Message: " + found.getMessage());
+                    }
+                    break;
+
+                case "d":
+                    System.out.print("Enter the recipient's cell number: ");
+                    System.out.println("\n" + Message.searchByRecipient(scanner.nextLine().trim()));
+                    break;
+
+                case "e":
+                    System.out.print("Enter the message hash: ");
+                    System.out.println(Message.deleteByMessageHash(scanner.nextLine().trim()));
+                    break;
+
+                case "f":
+                    System.out.println("\n" + Message.displayReport());
+                    break;
+
+                case "g":
+                    open = false;
+                    break;
+
+                default:
+                    System.out.println("Please choose a letter from a to g.");
+            }
+        }
     }
 
     /**
