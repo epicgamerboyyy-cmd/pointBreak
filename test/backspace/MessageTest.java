@@ -1,9 +1,9 @@
 package backspace;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit tests for Message, using the test data given in the brief.
@@ -25,7 +25,7 @@ public class MessageTest {
 
     // Empties the shared lists before each test so one test's messages don't
     // affect the next.
-    @BeforeEach
+    @Before
     public void reset() {
         Message.resetMessages();
     }
