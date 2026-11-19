@@ -1,0 +1,5 @@
+target/
+storedMessages.json
+build/
+dist/
+nbproject/private/

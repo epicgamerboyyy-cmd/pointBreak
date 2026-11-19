@@ -1,0 +1,27 @@
+name: Unit Tests
+
+# Runs the tests automatically whenever code is pushed or a pull request
+# is opened, so a broken change is caught before it reaches main.
+on:
+  push:
+    branches: [ main, QuickChatFeature ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run the unit tests
+        run: mvn -B test
